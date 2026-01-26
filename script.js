@@ -11,3 +11,10 @@ const gameBoard = (function () {
 
   return { getBoard, resetBoard };
 })();
+
+function createPlayer(name, mark) {
+  return { name, mark }
+}
+
+const user = createPlayer('Player', 'X');
+const computer = createPlayer('Computer', 'O');

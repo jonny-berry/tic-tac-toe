@@ -6,7 +6,7 @@ const computer = createPlayer('Computer', 'O');
 
 
 const gameBoard = (function () {
-  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
+  let boardPieces = [ '', 'O', '', '', 'X', '', '', '', '' ];
 
   function getBoard() {
     return boardPieces;
@@ -114,9 +114,43 @@ const gameController = (function () {
     return true; 
   }
 
-  
+  function checkForHorizontalMove() {
+    // Check for move opening at first index of each row
+    for (let pieceIndex = 0; pieceIndex <= 6; pieceIndex++) {
+      // Check for horizontal first index move opening
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 1] !== user.mark && board[pieceIndex + 2] !== user.mark) {
+        // Make first index of row move
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      pieceIndex += 2;  // Jump to start of next row of pieces
+    }
 
-  return { checkForWin, checkForDraw };
+    // Check for move opening at second index of each row
+    for (let pieceIndex = 1; pieceIndex <= 7; pieceIndex++) {
+      // Check for middle index horizontal move opening
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] !== user.mark && board[pieceIndex + 1] !== user.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      pieceIndex += 2;  // Jump to start of next row of pieces
+    }
+
+    // Check for move opening at third index of each row
+    for (let pieceIndex = 2; pieceIndex <= 8; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] !== user.mark && board[pieceIndex - 2] !== user.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      pieceIndex += 2;  // Jump to start of next row of pieces
+    }
+  }
+
+  function makeComputerMove() {
+    let madeMove = false;
+  }
+
+  return { checkForWin, makeComputerMove, checkForDraw };
 })();
 
 /*
@@ -129,4 +163,6 @@ const gameController = (function () {
 
 console.log(user.mark)
 console.log(gameBoard.getBoard())
-console.log(gameController.checkForDraw())
+// console.log(gameController.checkForDraw())
+gameController.makeComputerMove()
+console.log(gameBoard.getBoard())

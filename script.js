@@ -1,3 +1,33 @@
+const user = createPlayer('User', 'X');
+const computer = createPlayer('Computer', 'O');
+
+
+
+
+
+const gameBoard = (function () {
+  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
+
+  function getBoard() {
+    return boardPieces;
+  }
+
+  function resetBoard() {
+    boardPieces = [ '', '', '', '', '', '', '', '', '' ];
+  }
+
+  return { getBoard, resetBoard };
+})();
+
+function createPlayer(name, mark) {
+  return { name, mark };
+}
+
+
+
+
+
+
 const gameController = (function () {
   let userStats = { wins: 0, losses: 0, draws: 0 };
   let computerStats = { wins: 0, losses: 0, draws: 0 };
@@ -46,9 +76,9 @@ const gameController = (function () {
     return false;
   }
 
-  function checkDiagonalWin(mark) {
-    const board = gameBoard.getBoard();
+  const board = gameBoard.getBoard();
 
+  function checkDiagonalWin(mark) {
     if (board[0] === mark && board[4] === mark && board[8] === mark) {
       return true;
     }
@@ -69,11 +99,24 @@ const gameController = (function () {
       console.log('The computer won')
       return true;
     }
-    
+
     return false;
   }
 
-  return { checkForWin };
+  const numPieces = 9;
+  
+  function checkForDraw() {
+    for (let pieceIndex = 0; pieceIndex < numPieces; pieceIndex++) {
+      if (board[pieceIndex] === '') {
+        return false;
+      }
+    }
+    return true; 
+  }
+
+  
+
+  return { checkForWin, checkForDraw };
 })();
 
 /*
@@ -82,25 +125,8 @@ const gameController = (function () {
   X X X
 */
 
-const gameBoard = (function () {
-  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
+// Check for draw function
 
-  function getBoard() {
-    return boardPieces;
-  }
-
-  function resetBoard() {
-    boardPieces = [ '', '', '', '', '', '', '', '', '' ];
-  }
-
-  return { getBoard, resetBoard };
-})();
-
-function createPlayer(name, mark) {
-  return { name, mark };
-}
-
-const user = createPlayer('Player', 'X');
-const computer = createPlayer('Computer', 'O');
-
-console.log(gameController.checkForWin(user.mark, computer.mark))
+console.log(user.mark)
+console.log(gameBoard.getBoard())
+console.log(gameController.checkForDraw())

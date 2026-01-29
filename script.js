@@ -165,7 +165,7 @@ const gameController = (function () {
       }
     }
 
-    // Checks for second row moves
+    // Checks for third row moves
     for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
       if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 3] !== user.mark && board[pieceIndex - 6] !== user.mark) {
         console.log('second if')
@@ -175,8 +175,43 @@ const gameController = (function () {
     }
   }
 
+  function checkForDiagonalMove() {
+    // First piece
+    if (madeMove === false && board[0] === '' && board[4] !== user.mark && board[8] !== user.mark) {
+      board[0] = computer.mark;
+      madeMove = true;
+    }
+    // Third piece
+    else if (madeMove === false && board[2] === '' && board[4] !== user.mark && board[6] !== user.mark) {
+      board[2] = computer.mark;
+      madeMove = true;
+    }
+    // Center piece
+    else if (madeMove === false && board[4] === '' && board[0] !== user.mark && board[8] !== user.mark) {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    // Sixth piece
+    else if (madeMove === false && board[6] === '' && board[4] !== user.mark && board[2] !== user.mark) {
+      board[6] = computer.mark;
+      madeMove = true;
+    }
+    // Eighth piece
+    else if (madeMove === false && board[8] === '' && board[4] !== user.mark && board[0] !== user.mark) {
+      board[8] = computer.mark;
+      madeMove = true;
+    }
+  }
+
   function makeComputerMove() {
     let madeMove = false;
+
+  /*
+    X X X
+    X X X
+    X X X
+  */
+
   }
 
   return { checkForWin, makeComputerMove, checkForDraw };

@@ -6,7 +6,7 @@ const computer = createPlayer('Computer', 'O');
 
 
 const gameBoard = (function () {
-  let boardPieces = [ '', 'O', '', '', 'X', '', '', '', '' ];
+  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
 
   function getBoard() {
     return boardPieces;
@@ -143,6 +143,35 @@ const gameController = (function () {
         madeMove = true;
       }
       pieceIndex += 2;  // Jump to start of next row of pieces
+    }
+  }
+
+  function checkForVerticalMove() {
+    // Checks for first row moves
+    for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] !== user.mark && board[pieceIndex + 6] !== user.mark) {
+        console.log('first if')
+        board[pieceIndex] = computer.mark;
+        madeMove = true;  
+      }
+    }
+
+    // Checks for second row moves
+    for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] !== user.mark && board[pieceIndex - 3] !== user.mark) {
+        console.log('second if')
+        board[pieceIndex] = computer.mark;
+        madeMove = true;  
+      }
+    }
+
+    // Checks for second row moves
+    for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 3] !== user.mark && board[pieceIndex - 6] !== user.mark) {
+        console.log('second if')
+        board[pieceIndex] = computer.mark;
+        madeMove = true;  
+      }
     }
   }
 

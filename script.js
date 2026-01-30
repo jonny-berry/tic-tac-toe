@@ -559,7 +559,36 @@ const gameController = (function () {
   }
   
 
-  return { checkForWin, makeComputerMove, checkForDraw };
+  return { makeComputerMove, checkForWin, checkForDraw, getUserStats };
+})();
+
+
+console.log(gameController.getUserStats().wins)
+
+
+const displayController = (function () {
+  let wins = document.getElementById('wins-display');
+  let losses = document.getElementById('losses-display');
+  let draws = document.getElementById('draws-display');
+
+  wins.innerHTML = `Wins: ${gameController.getUserStats().wins}`;
+  losses.innerHTML = `Losses: ${gameController.getUserStats().losses}`;
+  draws.innerHTML = `Draws: ${gameController.getUserStats().draws}`;
+
+
+  
+  let userMarkDisplay = document.getElementById('user-mark-display'); 
+  let computerMarkDisplay = document.getElementById('computer-mark-display');
+
+  if (user.mark === 'X') {
+    userMarkDisplay.innerHTML = `User: <span class="x-mark-display">${user.mark}</span>`
+    computerMarkDisplay.innerHTML = `Computer: <span class="o-mark-display">${computer.mark}<span>`
+  }
+
+  else if (user.mark === 'O') {
+    userMarkDisplay.innerHTML = `User: <span class="o-mark-display">${user.mark}</span>`
+    computerMarkDisplay.innerHTML = `Computer: <span class="x-mark-display">${computer.mark}<span>`
+  }
 })();
 
 /*

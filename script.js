@@ -19,6 +19,11 @@ const gameBoard = (function () {
   return { getBoard, resetBoard };
 })();
 
+
+
+
+
+
 function createPlayer(name, mark) {
   return { name, mark };
 }
@@ -440,12 +445,105 @@ const gameController = (function () {
       }
     }
 
+  function blockHorizontalMove() {
+    for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
+      // Check first column each row
+      if (pieceIndex === 0 || pieceIndex === 3 || pieceIndex === 6) {
+        if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 1] === user.mark && board[pieceIndex + 2] === user.mark) {
+          board[pieceIndex] = computer.mark;
+          madeMove = true;
+        }
+      }
+
+      // Check second column each row
+      else if (pieceIndex === 1 || pieceIndex === 4 || pieceIndex === 7) {
+        if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === user.mark && board[pieceIndex + 1] === user.mark) {
+          board[pieceIndex] = computer.mark;
+          madeMove = true;
+        }
+      }
+
+      // Check third column each row
+      else if (pieceIndex === 2 || pieceIndex === 5 || pieceIndex === 8) {
+        if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === user.mark && board[pieceIndex - 2] === user.mark) {
+          board[pieceIndex] = computer.mark;
+          madeMove = true;
+        }
+      }
+    }
+  }
+
+  function blockVerticalMove() {
+    for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === user.mark && board[pieceIndex + 6] === user.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+
+    for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === user.mark && board[pieceIndex - 3] === user.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+
+    for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 3] === user.mark && board[pieceIndex - 6] === user.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+  }
+
+  
+
+  function blockDiagonalMove() {
+   // Complete top left
+    if (madeMove === false && board[0] === '' && board[4] === user.mark && board[8] === user.mark) {
+      board[0] = computer.mark;
+      madeMove = true;
+    }
+    // Complete top right
+    else if (madeMove === false && board[2] === '' && board[4] === user.mark && board[6] === user.mark) {
+      board[2] = computer.mark;
+      madeMove = true;
+    }
+    // Complete center, left diagonal
+    else if (madeMove === false && board[4] === '' && board[0] === user.mark && board[8] === user.mark) {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    // Complete center, right diagonal
+    else if (madeMove === false && board[4] === '' && board[2] === user.mark && board[6] === user.mark) {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    // Complete bottom left
+    else if (madeMove === false && board[6] === '' && board[4] === user.mark && board[2] === user.mark) {
+      board[6] = computer.mark;
+      madeMove = true;
+    }
+    // Complete bottom right
+    else if (madeMove === false && board[8] === '' && board[4] === user.mark && board[0] === user.mark) {
+      board[8] = computer.mark;
+      madeMove = true;
+    }
+  }
+
+  function blockWinningMove() {
+    blockHorizontalMove();
+    blockVerticalMove();
+    blockDiagonalMove();
+  }
+
   let madeMove = false;
 
   function makeComputerMove() {
     madeMove = false;
 
     completeWinningPattern();
+    blockWinningMove();
     setUpWinningPattern();
     checkForMove();
 
@@ -472,6 +570,5 @@ const gameController = (function () {
 
 console.log(user.mark)
 console.log(gameBoard.getBoard())
-// console.log(gameController.checkForDraw())
 gameController.makeComputerMove()
 console.log(gameBoard.getBoard())

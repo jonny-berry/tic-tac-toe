@@ -203,6 +203,12 @@ const gameController = (function () {
     }
   }
 
+  function checkForMove() {
+    checkForHorizontalMove();
+    checkForVerticalMove();
+    checkForDiagonalMove();
+  }
+
   function completeWinningRow() {
     for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
       // Check first column each row
@@ -441,6 +447,17 @@ const gameController = (function () {
 
     completeWinningPattern();
     setUpWinningPattern();
+    checkForMove();
+
+    // If previous functions did not find a move make a random move
+    while (madeMove === false) {
+        let randomIndex = Math.floor(Math.random() * 9);  // Generate random number 0 - 8 inclusive
+
+        if (board[randomIndex] === '') {
+          board[randomIndex] = computer.mark;
+          madeMove = true;
+        }
+    }
   }
   
 

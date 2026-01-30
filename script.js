@@ -293,10 +293,154 @@ const gameController = (function () {
     completeWinningDiagonal();
   }
 
+  function setUpWinningPattern() {
+    setUpWinningRow();
+    setUpWinningColumn();
+    setUpWinningDiagonal();
+  }
+
+  function setUpWinningDiagonal() {
+    // Check top left
+    if (madeMove === false && board[0] === '' && board[4] === computer.mark && board[8] === '') {
+      board[0] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[0] === '' && board[4] === '' && board[8] === computer.mark) {
+      board[0] = computer.mark;
+      madeMove = true;
+    }
+    // Check top right
+    else if (madeMove === false && board[2] === '' && board[4] === '' && board[6] === computer.mark) {
+      board[2] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[2] === '' && board[4] === computer.mark && board[6] === '') {
+      board[2] = computer.mark;
+      madeMove = true;
+    }
+    // Check center, left diagonal
+    else if (madeMove === false && board[4] === '' && board[0] === computer.mark && board[8] === '') {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[4] === '' && board[0] === '' && board[8] === computer.mark) {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    // Check center, right diagonal
+    else if (madeMove === false && board[4] === '' && board[2] === computer.mark && board[6] === '') {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[4] === '' && board[2] === '' && board[6] === computer.mark) {
+      board[4] = computer.mark;
+      madeMove = true;
+    }
+    // Check bottom left
+    else if (madeMove === false && board[6] === '' && board[4] === computer.mark && board[2] === '') {
+      board[6] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[6] === '' && board[4] === '' && board[2] === computer.mark) {
+      board[6] = computer.mark;
+      madeMove = true;
+    }
+    // Check bottom right
+    else if (madeMove === false && board[8] === '' && board[4] === computer.mark && board[0] === '') {
+      board[8] = computer.mark;
+      madeMove = true;
+    }
+    else if (madeMove === false && board[8] === '' && board[4] === '' && board[0] === computer.mark) {
+      board[8] = computer.mark;
+      madeMove = true;
+    }
+  }
+
+  function setUpWinningColumn() {
+    // Check first row
+    for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === computer.mark && board[pieceIndex + 6] === '') {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === '' && board[pieceIndex + 6] === computer.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+
+    // Check second row
+    for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === computer.mark && board[pieceIndex - 3] === '') {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 3] === '' && board[pieceIndex - 3] === computer.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+
+    // Check third row
+    for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
+      if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 3] === computer.mark && board[pieceIndex - 6] === '') {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+      else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 3] === '' && board[pieceIndex - 6] === computer.mark) {
+        board[pieceIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+  }
+
+  function setUpWinningRow() {
+    for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
+      // Check first column each row
+      if (pieceIndex === 0 || pieceIndex === 3 || pieceIndex === 6) {
+        if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 1] === computer.mark && board[pieceIndex + 2] === '') {
+          board[pieceIndex] = computer.mark;
+          madeMove = true;
+        }
+        else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex + 1] === '' && board[pieceIndex + 2] === computer.mark) {
+          board[pieceIndex] = computer.mark;
+          madeMove = true;
+        }
+      }
+
+        // Check second column each row
+        else if (pieceIndex === 1 || pieceIndex === 4 || pieceIndex === 7) {
+          if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === computer.mark && board[pieceIndex + 1] === '') {
+            board[pieceIndex] = computer.mark;
+            madeMove = true;
+          }
+          else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === '' && board[pieceIndex + 1] === computer.mark) {
+            board[pieceIndex] = computer.mark;
+            madeMove = true;
+          }
+        }
+
+        // Check third column each row
+        else if (pieceIndex === 2 || pieceIndex === 5 || pieceIndex === 8) {
+          if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === computer.mark && board[pieceIndex - 2] === '') {
+            board[pieceIndex] = computer.mark;
+            madeMove = true;
+          }
+          else if (madeMove === false && board[pieceIndex] === '' && board[pieceIndex - 1] === '' && board[pieceIndex - 2] === computer.mark) {
+            board[pieceIndex] = computer.mark;
+            madeMove = true;
+          }
+        }
+      }
+    }
+
+  let madeMove = false;
+
   function makeComputerMove() {
-    let madeMove = false;
+    madeMove = false;
 
     completeWinningPattern();
+    setUpWinningPattern();
   }
   
 

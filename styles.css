@@ -56,3 +56,51 @@ body {
 .o-mark-display {
   color: #ff0000;
 }
+
+#board-container {
+  height: 80vh;
+  width: 60vw;
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 30% 30% 30%;
+  background-color: white;
+  padding: 5% 10% 5% 10%;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+  border-radius: 100px;
+  border: 10px solid black;
+}
+
+.board-piece {
+  font-size: 6rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 16739e */
+#center-board-piece {
+  border: 20px solid #16739e;
+}
+
+#left-outside-board-piece,
+#right-outside-board-piece {
+  border: solid #16739e;
+  border-width: 20px 0 20px 0;
+}
+
+#top-board-piece,
+#bottom-board-piece {
+  border: solid #16739e;
+  border-width: 0 20px 0 20px;
+}
+
+.x-board-piece {
+  color: #00aeff;
+}
+
+.o-board-piece {
+  color: #ff0000;
+}

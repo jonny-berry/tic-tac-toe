@@ -6,7 +6,7 @@ const computer = createPlayer('Computer', 'O');
 
 
 const gameBoard = (function () {
-  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
+  let boardPieces = [ 'X', '', 'O', '', 'X', 'O', '', 'X', 'X' ];
 
   function getBoard() {
     return boardPieces;
@@ -567,28 +567,75 @@ console.log(gameController.getUserStats().wins)
 
 
 const displayController = (function () {
-  let wins = document.getElementById('wins-display');
-  let losses = document.getElementById('losses-display');
-  let draws = document.getElementById('draws-display');
+  function updateStatDisplay() {
+    let wins = document.getElementById('wins-display');
+    let losses = document.getElementById('losses-display');
+    let draws = document.getElementById('draws-display');
 
-  wins.innerHTML = `Wins: ${gameController.getUserStats().wins}`;
-  losses.innerHTML = `Losses: ${gameController.getUserStats().losses}`;
-  draws.innerHTML = `Draws: ${gameController.getUserStats().draws}`;
-
-
-  
-  let userMarkDisplay = document.getElementById('user-mark-display'); 
-  let computerMarkDisplay = document.getElementById('computer-mark-display');
-
-  if (user.mark === 'X') {
-    userMarkDisplay.innerHTML = `User: <span class="x-mark-display">${user.mark}</span>`
-    computerMarkDisplay.innerHTML = `Computer: <span class="o-mark-display">${computer.mark}<span>`
+    wins.innerHTML = `Wins: ${gameController.getUserStats().wins}`;
+    losses.innerHTML = `Losses: ${gameController.getUserStats().losses}`;
+    draws.innerHTML = `Draws: ${gameController.getUserStats().draws}`;
   }
 
-  else if (user.mark === 'O') {
-    userMarkDisplay.innerHTML = `User: <span class="o-mark-display">${user.mark}</span>`
-    computerMarkDisplay.innerHTML = `Computer: <span class="x-mark-display">${computer.mark}<span>`
+  function updateMarkDisplay() {
+    let userMarkDisplay = document.getElementById('user-mark-display'); 
+    let computerMarkDisplay = document.getElementById('computer-mark-display');
+
+    if (user.mark === 'X') {
+      userMarkDisplay.innerHTML = `User: <span class="x-mark-display">${user.mark}</span>`
+      computerMarkDisplay.innerHTML = `Computer: <span class="o-mark-display">${computer.mark}<span>`
+    }
+
+    else if (user.mark === 'O') {
+      userMarkDisplay.innerHTML = `User: <span class="o-mark-display">${user.mark}</span>`
+      computerMarkDisplay.innerHTML = `Computer: <span class="x-mark-display">${computer.mark}<span>`
+    }
   }
+
+  function displayBoard() {
+    const boardContainer = document.createElement('div');
+    boardContainer.id = 'board-container';
+    document.body.appendChild(boardContainer);
+
+    for (let currPiece = 0; currPiece < gameBoard.getBoard().length; currPiece++) {
+      const boardPiece = document.createElement('div');
+      boardPiece.innerHTML = gameBoard.getBoard()[currPiece];
+      boardContainer.appendChild(boardPiece);
+      boardPiece.classList.add('board-piece');
+
+      if (gameBoard.getBoard()[currPiece] === 'X') {
+        boardPiece.classList.add('x-board-piece');
+      }
+
+      else if (gameBoard.getBoard()[currPiece] === 'O') {
+        boardPiece.classList.add('o-board-piece');
+      }
+
+      if (currPiece === 4) {
+        boardPiece.id = 'center-board-piece';
+      }
+
+      else if (currPiece === 3) {
+        boardPiece.id = 'left-outside-board-piece';
+      }
+
+      else if (currPiece === 5) {
+        boardPiece.id = 'right-outside-board-piece';
+      }
+
+      else if (currPiece === 1) {
+        boardPiece.id = 'top-board-piece';
+      }
+
+      else if (currPiece === 7) {
+        boardPiece.id = 'bottom-board-piece';
+      }
+    }
+  }
+
+  displayBoard();
+  updateStatDisplay();
+  updateMarkDisplay();
 })();
 
 /*
@@ -600,4 +647,5 @@ const displayController = (function () {
 console.log(user.mark)
 console.log(gameBoard.getBoard())
 gameController.makeComputerMove()
-console.log(gameBoard.getBoard())
+console.log(gameBoard.getBoard());
+console.log(gameBoard.getBoard().length)

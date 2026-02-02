@@ -6,7 +6,7 @@ const computer = createPlayer('Computer', 'O');
 
 
 const gameBoard = (function () {
-  let boardPieces = [ 'X', '', 'O', '', 'X', 'O', '', 'X', 'X' ];
+  let boardPieces = [ '', '', '', '', '', '', '', '', '' ];
 
   function getBoard() {
     return boardPieces;
@@ -592,6 +592,24 @@ const displayController = (function () {
     }
   }
 
+  function addBoardPieceListener(boardPiece, pieceIndex) {
+      boardPiece.addEventListener('click', () => {
+        if (gameBoard.getBoard()[pieceIndex] === '') {
+          gameBoard.getBoard()[pieceIndex] = user.mark;
+          boardPiece.innerHTML = user.mark;
+        }
+        
+        // Add class based on piece status
+        if (gameBoard.getBoard()[pieceIndex] === 'X') {
+          boardPiece.classList.add('x-board-piece');
+        }
+
+        else if (gameBoard.getBoard()[pieceIndex] === 'O') {
+          boardPiece.classList.add('o-board-piece');
+        }
+      })
+  }
+
   function displayBoard() {
     const boardContainer = document.createElement('div');
     boardContainer.id = 'board-container';
@@ -599,10 +617,12 @@ const displayController = (function () {
 
     for (let currPiece = 0; currPiece < gameBoard.getBoard().length; currPiece++) {
       const boardPiece = document.createElement('div');
+      
       boardPiece.innerHTML = gameBoard.getBoard()[currPiece];
       boardContainer.appendChild(boardPiece);
       boardPiece.classList.add('board-piece');
 
+      // Add class based on piece status
       if (gameBoard.getBoard()[currPiece] === 'X') {
         boardPiece.classList.add('x-board-piece');
       }
@@ -611,6 +631,7 @@ const displayController = (function () {
         boardPiece.classList.add('o-board-piece');
       }
 
+      // Add class based on piece location
       if (currPiece === 4) {
         boardPiece.id = 'center-board-piece';
       }
@@ -630,6 +651,8 @@ const displayController = (function () {
       else if (currPiece === 7) {
         boardPiece.id = 'bottom-board-piece';
       }
+      
+      addBoardPieceListener(boardPiece, currPiece);
     }
   }
 
@@ -646,6 +669,6 @@ const displayController = (function () {
 
 console.log(user.mark)
 console.log(gameBoard.getBoard())
-gameController.makeComputerMove()
+// gameController.makeComputerMove()
 console.log(gameBoard.getBoard());
 console.log(gameBoard.getBoard().length)

@@ -607,11 +607,61 @@ const displayController = (function () {
         else if (gameBoard.getBoard()[pieceIndex] === 'O') {
           boardPiece.classList.add('o-board-piece');
         }
+
+        gameController.makeComputerMove()
+        updateBoard()
       })
   }
 
+  function addBoardPieceClasses(boardPiece, pieceIndex = -1) {
+    console.log(boardPiece.innerHTML)
+    // Add class based on piece status
+    if (boardPiece.innerHTML === 'X') {
+      boardPiece.classList.add('x-board-piece');
+    }
+
+    else if (boardPiece.innerHTML === 'O') {
+      boardPiece.classList.add('o-board-piece');
+    }
+
+    if (pieceIndex !== -1) {
+      // Add class based on piece location
+      if (pieceIndex === 4) {
+        boardPiece.id = 'center-board-piece';
+      }
+
+      else if (pieceIndex === 3) {
+        boardPiece.id = 'left-outside-board-piece';
+      }
+
+      else if (pieceIndex === 5) {
+        boardPiece.id = 'right-outside-board-piece';
+      }
+
+      else if (pieceIndex === 1) {
+        boardPiece.id = 'top-board-piece';
+      }
+
+      else if (pieceIndex === 7) {
+        boardPiece.id = 'bottom-board-piece';
+      }
+    }
+  }
+
+  function updateBoard() {
+    for (let currChild = 0; currChild < gameBoard.getBoard().length; currChild++) {
+      if (boardContainer.children[currChild].innerHTML !== gameBoard.getBoard()[currChild]) {
+        console.log('in if')
+        boardContainer.children[currChild].innerHTML = gameBoard.getBoard()[currChild];
+        // boardContainer.children[currChild].classList.add('o-board-piece')
+        addBoardPieceClasses(boardContainer.children[currChild], currChild);
+      }
+    }
+  }
+
+  const boardContainer = document.createElement('div');
+
   function displayBoard() {
-    const boardContainer = document.createElement('div');
     boardContainer.id = 'board-container';
     document.body.appendChild(boardContainer);
 
@@ -622,36 +672,8 @@ const displayController = (function () {
       boardContainer.appendChild(boardPiece);
       boardPiece.classList.add('board-piece');
 
-      // Add class based on piece status
-      if (gameBoard.getBoard()[currPiece] === 'X') {
-        boardPiece.classList.add('x-board-piece');
-      }
 
-      else if (gameBoard.getBoard()[currPiece] === 'O') {
-        boardPiece.classList.add('o-board-piece');
-      }
-
-      // Add class based on piece location
-      if (currPiece === 4) {
-        boardPiece.id = 'center-board-piece';
-      }
-
-      else if (currPiece === 3) {
-        boardPiece.id = 'left-outside-board-piece';
-      }
-
-      else if (currPiece === 5) {
-        boardPiece.id = 'right-outside-board-piece';
-      }
-
-      else if (currPiece === 1) {
-        boardPiece.id = 'top-board-piece';
-      }
-
-      else if (currPiece === 7) {
-        boardPiece.id = 'bottom-board-piece';
-      }
-      
+      addBoardPieceClasses(boardPiece, currPiece);
       addBoardPieceListener(boardPiece, currPiece);
     }
   }
@@ -659,6 +681,7 @@ const displayController = (function () {
   displayBoard();
   updateStatDisplay();
   updateMarkDisplay();
+  console.log(boardContainer.children[0])
 })();
 
 /*

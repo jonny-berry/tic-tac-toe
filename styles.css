@@ -28,25 +28,37 @@ img {
   max-inline-size: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* End of reset */
 
 body {
   background-color: #e9f8ff;
+  min-height: 100vh;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
 }
+
 
 #stat-display {
   display: flex;
   font-weight: 510;
   font-size: 1.6rem;
+  height: 10%;
   justify-content: space-around;
 }
 
 #mark-display {
   display: flex;
+  justify-content: center;
   font-weight: 510;
   font-size: 1.2rem;
-  gap: 20px;
-  justify-content: center;
+  gap: 37%;
+  margin-top: 3%;
 }
 
 .x-mark-display {
@@ -58,26 +70,29 @@ body {
 }
 
 #board-container {
-  height: 80vh;
-  width: 60vw;
+  margin: auto;
+  transform: translateY(-3%);
+  width: fit-content;
+  height: fit-content;
   display: grid;
   grid-template: 1fr 1fr 1fr / 30% 30% 30%;
   background-color: white;
-  padding: 5% 10% 5% 10%;
+  padding: 3% 15% 3% 15%;
   justify-self: center;
   align-self: center;
-  justify-content: center;
-  align-content: center;
-  border-radius: 100px;
+  border-radius: 70px;
   border: 10px solid black;
 }
 
 .board-piece {
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 8rem;
+  width: 8rem;
+  cursor: pointer;
 }
 
 /* 16739e */
@@ -103,4 +118,17 @@ body {
 
 .o-board-piece {
   color: #ff0000;
+}
+
+footer {
+  margin-top: auto
+}
+
+#footer-text {
+  font-weight: 550;
+  text-align: center;
+}
+
+#footer-text > a {
+  font-family: 'Space Mono';
 }

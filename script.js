@@ -597,7 +597,6 @@ const displayController = (function () {
         if (gameBoard.getBoard()[pieceIndex] === '') {
           gameBoard.getBoard()[pieceIndex] = user.mark;
           boardPiece.innerHTML = user.mark;
-        }
         
         // Add class based on piece status
         if (gameBoard.getBoard()[pieceIndex] === 'X') {
@@ -608,8 +607,12 @@ const displayController = (function () {
           boardPiece.classList.add('o-board-piece');
         }
 
-        gameController.makeComputerMove()
-        updateBoard()
+        if (gameController.checkForWin(user.mark, computer.mark) === false) {
+          gameController.makeComputerMove()
+        }
+
+        setTimeout(() => { updateBoard() }, 220)
+      }
       })
   }
 

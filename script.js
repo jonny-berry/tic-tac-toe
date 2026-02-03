@@ -571,8 +571,6 @@ const gameController = (function () {
 })();
 
 
-console.log(gameController.getUserStats().wins)
-
 
 const displayController = (function () {
   function updateStatDisplay() {
@@ -617,27 +615,43 @@ const displayController = (function () {
           boardPiece.classList.add('o-board-piece');
         }
 
+        // Check if users latest move won the match
         if (gameController.checkForWin(user.mark, computer.mark) === user.mark) {
           console.log('i won');
           gameOver = true;
+          gameController.getUserStats().wins++;
         }
 
+        else if (gameController.checkForDraw()) {
+          console.log('its a draw')
+          gameOver = true;
+          gameController.getUserStats().draws++;
+        }
+
+        // Make computer move if user has not won
         else if (!gameController.checkForWin(user.mark, computer.mark)) {
           gameController.makeComputerMove()
         }
 
+        // Check if computers latest move won the match
         if (gameController.checkForWin(user.mark, computer.mark) === computer.mark) {
           console.log('pc won')
           gameOver = true;
+          gameController.getUserStats().losses++;
         }
 
+        else if (gameController.checkForDraw() && gameOver === false) {
+          console.log('its a draw')
+          gameOver = true;
+          gameController.getUserStats().draws++;
+        }
+        
         setTimeout(() => { updateBoard() }, 220)
       }
       })
   }
 
   function addBoardPieceClasses(boardPiece, pieceIndex = -1) {
-    console.log(boardPiece.innerHTML)
     // Add class based on piece status
     if (boardPiece.innerHTML === 'X') {
       boardPiece.classList.add('x-board-piece');
@@ -674,9 +688,7 @@ const displayController = (function () {
   function updateBoard() {
     for (let currChild = 0; currChild < gameBoard.getBoard().length; currChild++) {
       if (boardContainer.children[currChild].innerHTML !== gameBoard.getBoard()[currChild]) {
-        console.log('in if')
         boardContainer.children[currChild].innerHTML = gameBoard.getBoard()[currChild];
-        // boardContainer.children[currChild].classList.add('o-board-piece')
         addBoardPieceClasses(boardContainer.children[currChild], currChild);
       }
     }
@@ -704,7 +716,6 @@ const displayController = (function () {
   displayBoard();
   updateStatDisplay();
   updateMarkDisplay();
-  console.log(boardContainer.children[0])
 })();
 
 /*
@@ -713,8 +724,4 @@ const displayController = (function () {
   X X X
 */
 
-console.log(user.mark)
 console.log(gameBoard.getBoard())
-// gameController.makeComputerMove()
-console.log(gameBoard.getBoard());
-console.log(gameBoard.getBoard().length)

@@ -645,7 +645,9 @@ const displayController = (function () {
           gameOver = true;
           gameController.getUserStats().draws++;
         }
-        
+
+        if (gameOver) { updateStatDisplay(); }
+
         setTimeout(() => { updateBoard() }, 220)
       }
       })

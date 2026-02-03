@@ -537,25 +537,35 @@ const gameController = (function () {
     blockDiagonalMove();
   }
 
+  function makeRandomMove() {
+    // If previous functions did not find a move make a random move
+    while (madeMove === false) {
+      let randomIndex = Math.floor(Math.random() * 9);  // Generate random number 0 - 8 inclusive
+
+      if (board[randomIndex] === '') {
+        board[randomIndex] = computer.mark;
+        madeMove = true;
+      }
+    }
+  }
+
+  let firstMove = true;
   let madeMove = false;
 
   function makeComputerMove() {
     madeMove = false;
 
+    // Make random move first move
+    if (firstMove === true) {
+      makeRandomMove();
+      firstMove = false;
+    }
+
     completeWinningPattern();
     blockWinningMove();
     setUpWinningPattern();
     checkForMove();
-
-    // If previous functions did not find a move make a random move
-    while (madeMove === false) {
-        let randomIndex = Math.floor(Math.random() * 9);  // Generate random number 0 - 8 inclusive
-
-        if (board[randomIndex] === '') {
-          board[randomIndex] = computer.mark;
-          madeMove = true;
-        }
-    }
+    makeRandomMove();
   }
   
 

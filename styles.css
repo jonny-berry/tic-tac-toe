@@ -129,6 +129,14 @@ footer {
   text-align: center;
 }
 
-#footer-text > a {
+#footer-anchor {
   font-family: 'Space Mono';
+}
+
+#name-wrapper {
+  font-family: 'Space Mono';
+}
+
+#footer-anchor:hover > #name-wrapper {
+  font-style: italic;
 }

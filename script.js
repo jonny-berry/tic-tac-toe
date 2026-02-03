@@ -97,12 +97,10 @@ const gameController = (function () {
 
   function checkForWin(userMark, computerMark) {
     if (checkHorizontalWin(userMark) || checkVerticalWin(userMark) || checkDiagonalWin(userMark)) {
-      console.log('The user won')
-      return true;
+      return userMark;
     }
     else if (checkHorizontalWin(computerMark) || checkVerticalWin(computerMark) || checkDiagonalWin(computerMark)) {
-      console.log('The computer won')
-      return true;
+      return computerMark;
     }
 
     return false;
@@ -602,9 +600,11 @@ const displayController = (function () {
     }
   }
 
+  let gameOver = false;
+
   function addBoardPieceListener(boardPiece, pieceIndex) {
       boardPiece.addEventListener('click', () => {
-        if (gameBoard.getBoard()[pieceIndex] === '') {
+        if (gameBoard.getBoard()[pieceIndex] === '' && gameOver === false) {
           gameBoard.getBoard()[pieceIndex] = user.mark;
           boardPiece.innerHTML = user.mark;
         
@@ -617,8 +617,18 @@ const displayController = (function () {
           boardPiece.classList.add('o-board-piece');
         }
 
-        if (gameController.checkForWin(user.mark, computer.mark) === false) {
+        if (gameController.checkForWin(user.mark, computer.mark) === user.mark) {
+          console.log('i won');
+          gameOver = true;
+        }
+
+        else if (!gameController.checkForWin(user.mark, computer.mark)) {
           gameController.makeComputerMove()
+        }
+
+        if (gameController.checkForWin(user.mark, computer.mark) === computer.mark) {
+          console.log('pc won')
+          gameOver = true;
         }
 
         setTimeout(() => { updateBoard() }, 220)

@@ -559,10 +559,10 @@ const gameController = (function () {
       firstMove = false;
     }
 
-    completeWinningPattern();
-    blockWinningMove();
-    setUpWinningPattern();
-    checkForMove();
+    // completeWinningPattern();
+    // blockWinningMove();
+    // setUpWinningPattern();
+    // checkForMove();
     makeRandomMove();
   }
   
@@ -598,6 +598,30 @@ const displayController = (function () {
     }
   }
 
+  function renderButtons() {
+    // Add upper you win display
+    const markDisplayContainer = document.getElementById('mark-display');
+    markDisplayContainer.innerHTML = '';
+    const youWinEl = document.createElement('p');
+    youWinEl.innerHTML = 'You Win! 🎉';
+    youWinEl.id = 'you-win-display';
+    markDisplayContainer.appendChild(youWinEl);
+
+    // Add restart and switch mark display elements
+    const buttonContainer = document.getElementById('button-container');
+    const playAgainButton = document.createElement('button');
+    const switchMarkButton = document.createElement('button');
+
+    playAgainButton.id = 'play-again-button';
+    switchMarkButton.id = 'switch-mark-button';
+
+    playAgainButton.innerHTML = 'Play Again';
+    switchMarkButton.innerHTML = 'Switch Mark';
+
+    buttonContainer.appendChild(playAgainButton);
+    buttonContainer.appendChild(switchMarkButton);
+  }
+
   let gameOver = false;
 
   function addBoardPieceListener(boardPiece, pieceIndex) {
@@ -620,6 +644,10 @@ const displayController = (function () {
           console.log('i won');
           gameOver = true;
           gameController.getUserStats().wins++;
+
+
+        
+          renderButtons()
         }
 
         else if (gameController.checkForDraw()) {

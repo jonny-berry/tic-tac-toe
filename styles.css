@@ -59,6 +59,7 @@ body {
   font-size: 1.2rem;
   gap: 37%;
   margin-top: 3%;
+  height: 5vh;
 }
 
 .x-mark-display {
@@ -139,4 +140,27 @@ footer {
 
 #footer-anchor:hover > #name-wrapper {
   font-style: italic;
+}
+
+#you-win-display {
+  font-size: 1.5rem;
+  font-weight: 550;
+}
+
+#button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 3vh;
+}
+
+#play-again-button,
+#switch-mark-button {
+  background-color: #00ff06;
+  border: 2px solid black;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 0.2% 1% 0.2% 1%;
+  cursor: pointer;
 }

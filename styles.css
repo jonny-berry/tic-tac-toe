@@ -37,29 +37,28 @@ a {
 
 body {
   background-color: #e9f8ff;
-  min-height: 100vh;
+  height: 100vh;
   padding: 1%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template: 1fr 0.5fr 4fr 0.5fr 1fr / 1fr;
 }
 
 
 #stat-display {
   display: flex;
+  justify-content: center;
   font-weight: 510;
   font-size: 1.6rem;
-  height: 10%;
   justify-content: space-around;
 }
 
 #mark-display {
   display: flex;
   justify-content: center;
+  align-items: center;
   font-weight: 510;
   font-size: 1.2rem;
   gap: 37%;
-  margin-top: 3%;
-  height: 5vh;
 }
 
 .x-mark-display {
@@ -71,13 +70,12 @@ body {
 }
 
 #board-container {
-  margin: auto;
-  transform: translateY(-3%);
   width: fit-content;
   height: fit-content;
   display: grid;
   grid-template: 1fr 1fr 1fr / 30% 30% 30%;
   background-color: white;
+  margin: 1.3% 0 1.3% 0;
   padding: 3% 15% 3% 15%;
   justify-self: center;
   align-self: center;
@@ -121,8 +119,32 @@ body {
   color: #ff0000;
 }
 
+#you-win-display {
+  font-size: 1.5rem;
+  font-weight: 550;
+}
+
+#button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  gap: 20px;
+  height: 3vh;
+}
+
+#play-again-button,
+#switch-mark-button {
+  background-color: #00ff06;
+  border: 2px solid black;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 0.2% 1% 0.2% 1%;
+  cursor: pointer;
+}
+
 footer {
-  margin-top: auto
+  margin-top: auto;
 }
 
 #footer-text {
@@ -140,27 +162,4 @@ footer {
 
 #footer-anchor:hover > #name-wrapper {
   font-style: italic;
-}
-
-#you-win-display {
-  font-size: 1.5rem;
-  font-weight: 550;
-}
-
-#button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  height: 3vh;
-}
-
-#play-again-button,
-#switch-mark-button {
-  background-color: #00ff06;
-  border: 2px solid black;
-  font-size: 1rem;
-  border-radius: 5px;
-  padding: 0.2% 1% 0.2% 1%;
-  cursor: pointer;
 }

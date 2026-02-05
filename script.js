@@ -620,6 +620,29 @@ const displayController = (function () {
 
     buttonContainer.appendChild(playAgainButton);
     buttonContainer.appendChild(switchMarkButton);
+
+    addPlayAgainButtonListener(playAgainButton);
+  }
+
+  function removeButtons() {
+    document.getElementById('you-win-display').innerHTML = '';
+
+    const buttonContainer = document.getElementById('button-container');
+    let playAgainButton = document.getElementById('play-again-button');
+    let switchMarkButton = document.getElementById('switch-mark-button');
+
+    buttonContainer.removeChild(playAgainButton)
+    buttonContainer.removeChild(switchMarkButton)
+  }
+
+  function addPlayAgainButtonListener(element) {
+    element.addEventListener('click', () => {
+      gameBoard.resetBoard(gameBoard.resetBoard(gameBoard.getBoard()));
+      updateBoard();
+      removeButtons();
+      displayBoard()
+      gameOver = false;
+    })
   }
 
   let gameOver = false;
@@ -724,8 +747,9 @@ const displayController = (function () {
     }
   }
 
-  const boardContainer = document.createElement('div');
 
+  const boardContainer = document.createElement('div');
+  
   function displayBoard() {
     boardContainer.id = 'board-container';
     document.body.appendChild(boardContainer);
@@ -736,7 +760,6 @@ const displayController = (function () {
       boardPiece.innerHTML = gameBoard.getBoard()[currPiece];
       boardContainer.appendChild(boardPiece);
       boardPiece.classList.add('board-piece');
-
 
       addBoardPieceClasses(boardPiece, currPiece);
       addBoardPieceListener(boardPiece, currPiece);

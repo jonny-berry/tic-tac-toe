@@ -639,6 +639,24 @@ const displayController = (function () {
     buttonContainer.appendChild(switchMarkButton);
 
     addPlayAgainButtonListener(playAgainButton);
+    addSwitchMarkButtonListener(switchMarkButton);
+  }
+
+  function addSwitchMarkButtonListener(element) {
+    element.addEventListener('click', () => {
+      if (user.mark === 'X') {
+        user.mark = 'O';
+        computer.mark = 'X';
+      }
+
+      else if (user.mark === 'O') {
+        user.mark = 'X';
+        computer.mark = 'O';
+      }
+
+      console.log(`user.mark: ${user.mark}`)
+      console.log(`computer.mark: ${computer.mark}`)
+    })
   }
 
   function removeButtons() {
@@ -737,9 +755,12 @@ const displayController = (function () {
           renderButtons(outcome);
         }
 
-        if (gameOver) { updateStatDisplay(); }
+        if (gameOver) {
+          updateBoard();
+          updateStatDisplay();
+        }
 
-        setTimeout(() => { updateBoard() }, 220)
+        if (!gameOver) { setTimeout(() => { updateBoard() }, 220) }
       }
       })
   }

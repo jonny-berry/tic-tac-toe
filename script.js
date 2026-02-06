@@ -561,10 +561,10 @@ const gameController = (function () {
       firstMove = false;
     }
 
-    completeWinningPattern();
-    blockWinningMove();
-    setUpWinningPattern();
-    checkForMove();
+    // completeWinningPattern();
+    // blockWinningMove();
+    // setUpWinningPattern();
+    // checkForMove();
     makeRandomMove();
   }
   
@@ -647,7 +647,14 @@ const displayController = (function () {
       gameController.resetController()
 
       gameOver = false;
+      
+      const markDisplay = document.getElementById('mark-display');
+      const youWinDisplay = document.getElementById('you-win-display');
 
+      markDisplay.removeChild(youWinDisplay);
+
+      renderMarkDisplay();
+      updateMarkDisplay();
       displayBoard();
     })
   }
@@ -780,10 +787,28 @@ const displayController = (function () {
     }
   }
 
+  function renderMarkDisplay() {
+    const markDisplay = document.getElementById('mark-display');
+    const userMarkDisplay = document.createElement('p');
+    const computerMarkDisplay = document.createElement('p');
+
+    userMarkDisplay.id = 'user-mark-display';
+    computerMarkDisplay.id = 'computer-mark-display';
+
+    markDisplay.appendChild(userMarkDisplay);
+    markDisplay.appendChild(computerMarkDisplay);
+  }
+
+  renderMarkDisplay()
   displayBoard();
   updateStatDisplay();
   updateMarkDisplay();
 })();
+
+/*
+    <p id="user-mark-display">User: X</p>
+    <p id="computer-mark-display">Computer: O</p>
+*/
 
 /*
   X X X

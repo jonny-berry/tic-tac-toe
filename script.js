@@ -600,13 +600,28 @@ const displayController = (function () {
     }
   }
 
-  function renderButtons() {
+  function renderButtons(outcome) {
     // Add upper you win display
     const markDisplayContainer = document.getElementById('mark-display');
     markDisplayContainer.innerHTML = '';
     const youWinEl = document.createElement('p');
-    youWinEl.innerHTML = 'You Win! 🎉';
-    youWinEl.id = 'you-win-display';
+
+    if (outcome === 'user') {
+      youWinEl.innerHTML = 'You Win! 🎉';
+      youWinEl.id = 'you-win-display';
+    }
+
+    else if (outcome === 'computer') {
+      youWinEl.innerHTML = 'You Lose. ❌';
+      youWinEl.id = 'you-win-display';
+    }
+
+    else if (outcome === 'draw') {
+      youWinEl.innerHTML = 'It’s a draw. 🤝';
+      youWinEl.id = 'you-win-display';
+    }
+
+
     markDisplayContainer.appendChild(youWinEl);
 
     // Add restart and switch mark display elements
@@ -660,6 +675,7 @@ const displayController = (function () {
   }
 
   let gameOver = false;
+  let outcome;
 
   function addBoardPieceListener(boardPiece, pieceIndex) {
       boardPiece.addEventListener('click', () => {
@@ -678,19 +694,22 @@ const displayController = (function () {
 
         // Check if users latest move won the match
         if (gameController.checkForWin(user.mark, computer.mark) === user.mark) {
-          console.log('i won');
           gameOver = true;
+          winner = 'user';
+  
           gameController.getUserStats().wins++;
 
-
-        
-          renderButtons()
+          outcome = 'user';
+          renderButtons(outcome);
         }
 
         else if (gameController.checkForDraw()) {
           console.log('its a draw')
           gameOver = true;
           gameController.getUserStats().draws++;
+          
+          outcome = 'draw';
+          renderButtons(outcome);
         }
 
         // Make computer move if user has not won
@@ -704,12 +723,18 @@ const displayController = (function () {
           console.log('pc won')
           gameOver = true;
           gameController.getUserStats().losses++;
+
+          outcome = 'computer';
+          renderButtons(outcome);
         }
 
         else if (gameController.checkForDraw() && gameOver === false) {
           console.log('its a draw')
           gameOver = true;
           gameController.getUserStats().draws++;
+
+          outcome = 'draw';
+          renderButtons(outcome);
         }
 
         if (gameOver) { updateStatDisplay(); }

@@ -777,24 +777,40 @@ const displayController = (function () {
 
     if (pieceIndex !== -1) {
       // Add class based on piece location
-      if (pieceIndex === 4) {
-        boardPiece.id = 'center-board-piece';
-      }
-
-      else if (pieceIndex === 3) {
-        boardPiece.id = 'left-outside-board-piece';
-      }
-
-      else if (pieceIndex === 5) {
-        boardPiece.id = 'right-outside-board-piece';
+      if (pieceIndex === 0) {
+        boardPiece.id = 'top-left-board-piece';
       }
 
       else if (pieceIndex === 1) {
-        boardPiece.id = 'top-board-piece';
+        boardPiece.id = 'top-center-board-piece';
+      }
+
+      else if (pieceIndex === 2) {
+        boardPiece.id = 'top-right-board-piece';
+      }
+
+      else if (pieceIndex === 3) {
+        boardPiece.id = 'center-left-board-piece';
+      }
+
+      else if (pieceIndex === 4) {
+        boardPiece.id = 'center-board-piece';
+      }
+
+      else if (pieceIndex === 5) {
+        boardPiece.id = 'center-right-board-piece';
+      }
+
+      else if (pieceIndex === 6) {
+        boardPiece.id = 'bottom-left-board-piece';
       }
 
       else if (pieceIndex === 7) {
-        boardPiece.id = 'bottom-board-piece';
+        boardPiece.id = 'bottom-center-board-piece';
+      }
+
+      else if (pieceIndex === 8) {
+        boardPiece.id = 'bottom-right-board-piece';
       }
     }
   }

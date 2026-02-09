@@ -28,6 +28,13 @@ img {
   max-inline-size: 100%;
 }
 
+button {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  border: none;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -38,6 +45,7 @@ a {
 body {
   background-color: #e9f8ff;
   height: 100vh;
+  height: 100dvh;
   padding: 1%;
   display: grid;
   grid-template: 1fr 0.5fr 4fr 0.5fr 1fr / 1fr;
@@ -188,10 +196,12 @@ footer {
 @media (max-width: 650px) {
   body {
     height: 100vh;
+    height: 100dvh;
     grid-template: 10vh 10vh 1fr 10vh 10vh / 1fr;
     padding: 0;
     margin: 0;
     align-items: center;
+    overflow: hidden;
   }
 
   #mark-display {
@@ -284,6 +294,11 @@ footer {
   #center-right-board-piece,
   #bottom-right-board-piece {
     margin-left: -20vw;
+  }
+
+  #play-again-button,
+  #switch-mark-button {
+    padding: 0.5% 2% 0.5% 2%;
   }
 }
 

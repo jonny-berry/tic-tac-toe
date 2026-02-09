@@ -561,10 +561,10 @@ const gameController = (function () {
       firstMove = false;
     }
 
-    // completeWinningPattern();
-    // blockWinningMove();
-    // setUpWinningPattern();
-    // checkForMove();
+    completeWinningPattern();
+    blockWinningMove();
+    setUpWinningPattern();
+    checkForMove();
     makeRandomMove();
   }
   

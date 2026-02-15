@@ -580,9 +580,9 @@ const displayController = (function () {
     let losses = document.getElementById('losses-display');
     let draws = document.getElementById('draws-display');
 
-    wins.innerHTML = `Wins: ${gameController.getUserStats().wins}`;
-    losses.innerHTML = `Losses: ${gameController.getUserStats().losses}`;
-    draws.innerHTML = `Draws: ${gameController.getUserStats().draws}`;
+    wins.innerHTML = `Wins: <span class="total-wins">${gameController.getUserStats().wins}</span>`;
+    losses.innerHTML = `Losses: <span class="total-losses">${gameController.getUserStats().losses}</span>`;
+    draws.innerHTML = `Draws: <span class="total-draws">${gameController.getUserStats().draws}</span>`;
   }
 
   function updateMarkDisplay() {

@@ -23,11 +23,9 @@ const gameBoard = (function () {
 
 
 
-
 function createPlayer(name, mark) {
   return { name, mark };
 }
-
 
 
 
@@ -37,170 +35,313 @@ const gameController = (function () {
   let userStats = { wins: 0, losses: 0, draws: 0 };
   let computerStats = { wins: 0, losses: 0, draws: 0 };
 
+
   function getUserStats() {
     return userStats;
   }
 
+  
   function getComputerStats() {
     return computerStats;
   }
 
+
+
   function checkHorizontalWin(mark) {
-    if (gameBoard.getBoard()[0] === mark && gameBoard.getBoard()[1] === mark && gameBoard.getBoard()[2] === mark) {
+    // Check for win in first row
+    if (
+      gameBoard.getBoard()[0] === mark &&
+      gameBoard.getBoard()[1] === mark &&
+      gameBoard.getBoard()[2] === mark
+    ) {
       return true;
     }
     
-    if (gameBoard.getBoard()[3] === mark && gameBoard.getBoard()[4] === mark && gameBoard.getBoard()[5] === mark) {
+
+    // Check for win in second row
+    if (
+      gameBoard.getBoard()[3] === mark &&
+      gameBoard.getBoard()[4] === mark &&
+      gameBoard.getBoard()[5] === mark
+    ) {
       return true;
     }
 
-    if (gameBoard.getBoard()[6] === mark && gameBoard.getBoard()[7] === mark && gameBoard.getBoard()[8] === mark) {
+
+    // Check for win in third row
+    if (
+      gameBoard.getBoard()[6] === mark &&
+      gameBoard.getBoard()[7] === mark &&
+      gameBoard.getBoard()[8] === mark
+    ) {
       return true;
     }
 
-    return false;
+
+    return false; // Return false if win is not found
   }
+
+
 
   function checkVerticalWin(mark) {
-    const board = gameBoard.getBoard();
-
-    if (gameBoard.getBoard()[0] === mark && gameBoard.getBoard()[3] === mark && gameBoard.getBoard()[6] === mark) {
+    // Check for win in first column
+    if (
+      gameBoard.getBoard()[0] === mark &&
+      gameBoard.getBoard()[3] === mark &&
+      gameBoard.getBoard()[6] === mark
+    ) {
       return true;
     }
     
-    if (gameBoard.getBoard()[1] === mark && gameBoard.getBoard()[4] === mark && gameBoard.getBoard()[7] === mark) {
+
+    // Check for win in second column
+    if (
+      gameBoard.getBoard()[1] === mark &&
+      gameBoard.getBoard()[4] === mark &&
+      gameBoard.getBoard()[7] === mark
+    ) {
       return true;
     }
 
-    if (gameBoard.getBoard()[2] === mark && gameBoard.getBoard()[5] === mark && gameBoard.getBoard()[8] === mark) {
+
+    // Check for win in third column
+    if (
+      gameBoard.getBoard()[2] === mark &&
+      gameBoard.getBoard()[5] === mark &&
+      gameBoard.getBoard()[8] === mark
+    ) {
       return true;
     }
 
-    return false;
+
+    return false; // Return false if win is not found
   }
+
+
 
   function checkDiagonalWin(mark) {
-    if (gameBoard.getBoard()[0] === mark && gameBoard.getBoard()[4] === mark && gameBoard.getBoard()[8] === mark) {
+    // Check for win from top left to bottom right
+    if (
+      gameBoard.getBoard()[0] === mark &&
+      gameBoard.getBoard()[4] === mark &&
+      gameBoard.getBoard()[8] === mark
+    ) {
       return true;
     }
     
-    if (gameBoard.getBoard()[2] === mark && gameBoard.getBoard()[4] === mark && gameBoard.getBoard()[6] === mark) {
+
+    // Check for win from top right to bottom left
+    if (
+      gameBoard.getBoard()[2] === mark &&
+      gameBoard.getBoard()[4] === mark &&
+      gameBoard.getBoard()[6] === mark
+    ) {
       return true;
     }
 
-    return false;
+
+    return false; // Return false if win is not found
   }
 
+
+
   function checkForWin(userMark, computerMark) {
-    if (checkHorizontalWin(userMark) || checkVerticalWin(userMark) || checkDiagonalWin(userMark)) {
+    // Check for user win
+    if (
+      checkHorizontalWin(userMark) ||
+      checkVerticalWin(userMark) ||
+      checkDiagonalWin(userMark)
+    ) {
       return userMark;
     }
-    else if (checkHorizontalWin(computerMark) || checkVerticalWin(computerMark) || checkDiagonalWin(computerMark)) {
+
+    // Check for computer win
+    else if (
+      checkHorizontalWin(computerMark) ||
+      checkVerticalWin(computerMark) ||
+      checkDiagonalWin(computerMark)
+    ) {
       return computerMark;
     }
 
-    return false;
+
+    return false; // Return false if win is not found
   }
 
-  const numPieces = 9;
-  
+
+
   function checkForDraw() {
+    const numPieces = 9;  // Total number of board pieces
+
     for (let pieceIndex = 0; pieceIndex < numPieces; pieceIndex++) {
       if (gameBoard.getBoard()[pieceIndex] === '') {
-        return false;
+        return false; // Return false if any piece is not populated
       }
     }
-    return true; 
+
+    return true;  // Return true if all pieces are populated
   }
+
+
 
   function checkForHorizontalMove() {
-    // Check for move opening at first index of each row
+    // Check for move opening at first column of each row
     for (let pieceIndex = 0; pieceIndex <= 6; pieceIndex++) {
-      // Check for horizontal first index move opening
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 1] !== user.mark && gameBoard.getBoard()[pieceIndex + 2] !== user.mark) {
-        // Make first index of row move
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 1] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex + 2] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      pieceIndex += 2;  // Jump to start of next row of pieces
+
+      pieceIndex += 2;  // Jump to start of next row
     }
 
-    // Check for move opening at second index of each row
+
+    // Check for move opening at second column of each row
     for (let pieceIndex = 1; pieceIndex <= 7; pieceIndex++) {
-      // Check for middle index horizontal move opening
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] !== user.mark && gameBoard.getBoard()[pieceIndex + 1] !== user.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 1] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex + 1] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      pieceIndex += 2;  // Jump to start of next row of pieces
+
+      pieceIndex += 2;  // Jump to start of next row
     }
 
-    // Check for move opening at third index of each row
+
+    // Check for move opening at third column of each row
     for (let pieceIndex = 2; pieceIndex <= 8; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] !== user.mark && gameBoard.getBoard()[pieceIndex - 2] !== user.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 1] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex - 2] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      pieceIndex += 2;  // Jump to start of next row of pieces
+
+      pieceIndex += 2;  // Jump to start of next row
     }
   }
+
+
 
   function checkForVerticalMove() {
-    // Checks for first row moves
+    // Checks first row for moves
     for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] !== user.mark && gameBoard.getBoard()[pieceIndex + 6] !== user.mark) {
-        console.log('first if')
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex + 6] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;  
       }
     }
 
-    // Checks for second row moves
+
+    // Checks second row for moves
     for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] !== user.mark && gameBoard.getBoard()[pieceIndex - 3] !== user.mark) {
-        console.log('second if')
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex - 3] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;  
       }
     }
 
-    // Checks for third row moves
+
+    // Checks third row for moves
     for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 3] !== user.mark && gameBoard.getBoard()[pieceIndex - 6] !== user.mark) {
-        console.log('second if')
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] !== user.mark &&
+        gameBoard.getBoard()[pieceIndex - 6] !== user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;  
       }
     }
   }
+
+
 
   function checkForDiagonalMove() {
-    // First piece
-    if (madeMove === false && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[4] !== user.mark && gameBoard.getBoard()[8] !== user.mark) {
-      gameBoard.getBoard()[0] = computer.mark;
+    // Top left piece empty
+    if (
+      madeMove === false &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[4] !== user.mark &&
+      gameBoard.getBoard()[8] !== user.mark
+    ) {
+      gameBoard.getBoard()[0] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Third piece
-    else if (madeMove === false && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[4] !== user.mark && gameBoard.getBoard()[6] !== user.mark) {
-      gameBoard.getBoard()[2] = computer.mark;
+    
+
+    // Top right piece empty
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[4] !== user.mark &&
+      gameBoard.getBoard()[6] !== user.mark
+    ) {
+      gameBoard.getBoard()[2] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Center piece
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] !== user.mark && gameBoard.getBoard()[8] !== user.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+
+    // Center piece empty
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] !== user.mark &&
+      gameBoard.getBoard()[8] !== user.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Sixth piece
-    else if (madeMove === false && gameBoard.getBoard()[6] === '' && gameBoard.getBoard()[4] !== user.mark && gameBoard.getBoard()[2] !== user.mark) {
-      gameBoard.getBoard()[6] = computer.mark;
+
+
+    // Bottom left piece empty
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[6] === '' &&
+      gameBoard.getBoard()[4] !== user.mark &&
+      gameBoard.getBoard()[2] !== user.mark
+    ) {
+      gameBoard.getBoard()[6] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Eighth piece
-    else if (madeMove === false && gameBoard.getBoard()[8] === '' && gameBoard.getBoard()[4] !== user.mark && gameBoard.getBoard()[0] !== user.mark) {
-      gameBoard.getBoard()[8] = computer.mark;
+
+
+    // Bottom right piece empty
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[8] === '' &&
+      gameBoard.getBoard()[4] !== user.mark &&
+      gameBoard.getBoard()[0] !== user.mark
+    ) {
+      gameBoard.getBoard()[8] = computer.mark;  // Make move
       madeMove = true;
     }
   }
+
+
 
   function checkForMove() {
     checkForHorizontalMove();
@@ -208,89 +349,174 @@ const gameController = (function () {
     checkForDiagonalMove();
   }
 
+
+  
   function completeWinningRow() {
     for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
-      // Check first column each row
+      // Check first column of each row
       if (pieceIndex === 0 || pieceIndex === 3 || pieceIndex === 6) {
-        if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 1] === computer.mark && gameBoard.getBoard()[pieceIndex + 2] === computer.mark) {
-          gameBoard.getBoard()[pieceIndex] = computer.mark;
+        if (
+          madeMove === false &&
+          gameBoard.getBoard()[pieceIndex] === '' &&
+          gameBoard.getBoard()[pieceIndex + 1] === computer.mark &&
+          gameBoard.getBoard()[pieceIndex + 2] === computer.mark
+        ) {
+          gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
           madeMove = true;
         }
       }
 
-      // Check second column each row
+
+      // Check second column of each row
       else if (pieceIndex === 1 || pieceIndex === 4 || pieceIndex === 7) {
-        if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === computer.mark && gameBoard.getBoard()[pieceIndex + 1] === computer.mark) {
-          gameBoard.getBoard()[pieceIndex] = computer.mark;
+        if (
+          madeMove === false &&
+          gameBoard.getBoard()[pieceIndex] === '' &&
+          gameBoard.getBoard()[pieceIndex - 1] === computer.mark &&
+          gameBoard.getBoard()[pieceIndex + 1] === computer.mark
+        ) {
+          gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
           madeMove = true;
         }
       }
 
-      // Check third column each row
+
+      // Check third column of each row
       else if (pieceIndex === 2 || pieceIndex === 5 || pieceIndex === 8) {
-        if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === computer.mark && gameBoard.getBoard()[pieceIndex - 2] === computer.mark) {
-          gameBoard.getBoard()[pieceIndex] = computer.mark;
+        if (
+          madeMove === false &&
+          gameBoard.getBoard()[pieceIndex] === '' &&
+          gameBoard.getBoard()[pieceIndex - 1] === computer.mark &&
+          gameBoard.getBoard()[pieceIndex - 2] === computer.mark
+        ) {
+          gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
           madeMove = true;
         }
       }
     }
   }
+
+
 
   function completeWinningColumn() {
+    // Check for first row move opening
     for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === computer.mark && gameBoard.getBoard()[pieceIndex + 6] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex + 6] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
+
+    // Check for second row move opening
     for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === computer.mark && gameBoard.getBoard()[pieceIndex - 3] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex - 3] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
+
+    // Check for third row move opening
     for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 3] === computer.mark && gameBoard.getBoard()[pieceIndex - 6] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex - 6] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
   }
+
+
 
   function completeWinningDiagonal() {
     // Complete top left
-    if (madeMove === false && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[8] === computer.mark) {
-      gameBoard.getBoard()[0] = computer.mark;
+    if (
+      madeMove === false &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[8] === computer.mark
+    ) {
+      gameBoard.getBoard()[0] = computer.mark;  // Make move
       madeMove = true;
     }
+
+
     // Complete top right
-    else if (madeMove === false && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[6] === computer.mark) {
-      gameBoard.getBoard()[2] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[6] === computer.mark
+    ) {
+      gameBoard.getBoard()[2] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Complete center, left diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] === computer.mark && gameBoard.getBoard()[8] === computer.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+
+    // Complete center for left diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] === computer.mark &&
+      gameBoard.getBoard()[8] === computer.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Complete center, right diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[2] === computer.mark && gameBoard.getBoard()[6] === computer.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+
+    // Complete center for right diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[2] === computer.mark &&
+      gameBoard.getBoard()[6] === computer.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
+
+
     // Complete bottom left
-    else if (madeMove === false && gameBoard.getBoard()[6] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[2] === computer.mark) {
-      gameBoard.getBoard()[6] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[6] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[2] === computer.mark
+    ) {
+      gameBoard.getBoard()[6] = computer.mark;  // Make move
       madeMove = true;
     }
+
+
     // Complete bottom right
-    else if (madeMove === false && gameBoard.getBoard()[8] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[0] === computer.mark) {
-      gameBoard.getBoard()[8] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[8] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[0] === computer.mark
+    ) {
+      gameBoard.getBoard()[8] = computer.mark;  // Make move
       madeMove = true;
     }
   }
+
+
 
   function completeWinningPattern() {
     completeWinningRow();
@@ -298,146 +524,301 @@ const gameController = (function () {
     completeWinningDiagonal();
   }
 
+
+
   function setUpWinningPattern() {
     setUpWinningRow();
     setUpWinningColumn();
     setUpWinningDiagonal();
   }
 
+
+
   function setUpWinningDiagonal() {
     // Check top left
-    if (madeMove === false && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[8] === '') {
+    if (
+      madeMove === false &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[8] === ''
+    ) {
       gameBoard.getBoard()[0] = computer.mark;
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[8] === computer.mark) {
-      gameBoard.getBoard()[0] = computer.mark;
+
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[8] === computer.mark
+    ) {
+      gameBoard.getBoard()[0] = computer.mark;  // Make move
       madeMove = true;
     }
+
+    
     // Check top right
-    else if (madeMove === false && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[6] === computer.mark) {
-      gameBoard.getBoard()[2] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[6] === computer.mark
+    ) {
+      gameBoard.getBoard()[2] = computer.mark;  // Make move
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[6] === '') {
-      gameBoard.getBoard()[2] = computer.mark;
+    
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[6] === ''
+    ) {
+      gameBoard.getBoard()[2] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Check center, left diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] === computer.mark && gameBoard.getBoard()[8] === '') {
-      gameBoard.getBoard()[4] = computer.mark;
+
+
+    // Check center for left diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] === computer.mark &&
+      gameBoard.getBoard()[8] === ''
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[8] === computer.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[8] === computer.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Check center, right diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[2] === computer.mark && gameBoard.getBoard()[6] === '') {
-      gameBoard.getBoard()[4] = computer.mark;
+
+
+    // Check center for right diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[2] === computer.mark &&
+      gameBoard.getBoard()[6] === ''
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[6] === computer.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[6] === computer.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
+
+
     // Check bottom left
-    else if (madeMove === false && gameBoard.getBoard()[6] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[2] === '') {
-      gameBoard.getBoard()[6] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[6] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[2] === ''
+    ) {
+      gameBoard.getBoard()[6] = computer.mark;  // Make move
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[6] === '' && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[2] === computer.mark) {
-      gameBoard.getBoard()[6] = computer.mark;
+
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[6] === '' &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[2] === computer.mark
+    ) {
+      gameBoard.getBoard()[6] = computer.mark;  // Make move
       madeMove = true;
     }
+
+
     // Check bottom right
-    else if (madeMove === false && gameBoard.getBoard()[8] === '' && gameBoard.getBoard()[4] === computer.mark && gameBoard.getBoard()[0] === '') {
-      gameBoard.getBoard()[8] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[8] === '' &&
+      gameBoard.getBoard()[4] === computer.mark &&
+      gameBoard.getBoard()[0] === ''
+    ) {
+      gameBoard.getBoard()[8] = computer.mark;  // Make move
       madeMove = true;
     }
-    else if (madeMove === false && gameBoard.getBoard()[8] === '' && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] === computer.mark) {
-      gameBoard.getBoard()[8] = computer.mark;
+
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[8] === '' &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] === computer.mark
+    ) {
+      gameBoard.getBoard()[8] = computer.mark;  // Make move
       madeMove = true;
     }
   }
+
+
 
   function setUpWinningColumn() {
-    // Check first row
+    // Check first row for winning move opening
     for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === computer.mark && gameBoard.getBoard()[pieceIndex + 6] === '') {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex + 6] === ''
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === '' && gameBoard.getBoard()[pieceIndex + 6] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+      else if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === '' &&
+        gameBoard.getBoard()[pieceIndex + 6] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
-    // Check second row
+
+    // Check second row for winning move opening
     for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === computer.mark && gameBoard.getBoard()[pieceIndex - 3] === '') {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex - 3] === ''
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === '' && gameBoard.getBoard()[pieceIndex - 3] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+      else if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
-    // Check third row
+
+    // Check third row for winning move opening
     for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 3] === computer.mark && gameBoard.getBoard()[pieceIndex - 6] === '') {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] === computer.mark &&
+        gameBoard.getBoard()[pieceIndex - 6] === ''
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
-      else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 3] === '' && gameBoard.getBoard()[pieceIndex - 6] === computer.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+      else if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] === '' &&
+        gameBoard.getBoard()[pieceIndex - 6] === computer.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
   }
 
+
+  
   function setUpWinningRow() {
     for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
       // Check first column each row
       if (pieceIndex === 0 || pieceIndex === 3 || pieceIndex === 6) {
-        if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 1] === computer.mark && gameBoard.getBoard()[pieceIndex + 2] === '') {
-          gameBoard.getBoard()[pieceIndex] = computer.mark;
+        if (
+          madeMove === false &&
+          gameBoard.getBoard()[pieceIndex] === '' &&
+          gameBoard.getBoard()[pieceIndex + 1] === computer.mark &&
+          gameBoard.getBoard()[pieceIndex + 2] === ''
+        ) {
+          gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
           madeMove = true;
         }
-        else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 1] === '' && gameBoard.getBoard()[pieceIndex + 2] === computer.mark) {
-          gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+        else if (
+          madeMove === false &&
+          gameBoard.getBoard()[pieceIndex] === '' &&
+          gameBoard.getBoard()[pieceIndex + 1] === '' &&
+          gameBoard.getBoard()[pieceIndex + 2] === computer.mark
+        ) {
+          gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
           madeMove = true;
         }
       }
 
+
         // Check second column each row
         else if (pieceIndex === 1 || pieceIndex === 4 || pieceIndex === 7) {
-          if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === computer.mark && gameBoard.getBoard()[pieceIndex + 1] === '') {
-            gameBoard.getBoard()[pieceIndex] = computer.mark;
+          if (
+            madeMove === false &&
+            gameBoard.getBoard()[pieceIndex] === '' &&
+            gameBoard.getBoard()[pieceIndex - 1] === computer.mark &&
+            gameBoard.getBoard()[pieceIndex + 1] === ''
+          ) {
+            gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
             madeMove = true;
           }
-          else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === '' && gameBoard.getBoard()[pieceIndex + 1] === computer.mark) {
-            gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+          else if (
+            madeMove === false &&
+            gameBoard.getBoard()[pieceIndex] === '' &&
+            gameBoard.getBoard()[pieceIndex - 1] === '' &&
+            gameBoard.getBoard()[pieceIndex + 1] === computer.mark
+          ) {
+            gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
             madeMove = true;
           }
         }
 
+
         // Check third column each row
         else if (pieceIndex === 2 || pieceIndex === 5 || pieceIndex === 8) {
-          if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === computer.mark && gameBoard.getBoard()[pieceIndex - 2] === '') {
-            gameBoard.getBoard()[pieceIndex] = computer.mark;
+          if (
+            madeMove === false &&
+            gameBoard.getBoard()[pieceIndex] === '' &&
+            gameBoard.getBoard()[pieceIndex - 1] === computer.mark &&
+            gameBoard.getBoard()[pieceIndex - 2] === ''
+          ) {
+            gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
             madeMove = true;
           }
-          else if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 1] === '' && gameBoard.getBoard()[pieceIndex - 2] === computer.mark) {
-            gameBoard.getBoard()[pieceIndex] = computer.mark;
+
+          else if (
+            madeMove === false &&
+            gameBoard.getBoard()[pieceIndex] === '' &&
+            gameBoard.getBoard()[pieceIndex - 1] === '' &&
+            gameBoard.getBoard()[pieceIndex - 2] === computer.mark
+          ) {
+            gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
             madeMove = true;
           }
         }
       }
     }
+
+
 
   function blockHorizontalMove() {
     for (let pieceIndex = 0; pieceIndex <= 8; pieceIndex++) {
@@ -448,6 +829,8 @@ const gameController = (function () {
           madeMove = true;
         }
       }
+
+
 
       // Check second column each row
       else if (pieceIndex === 1 || pieceIndex === 4 || pieceIndex === 7) {
@@ -467,24 +850,46 @@ const gameController = (function () {
     }
   }
 
+
+
   function blockVerticalMove() {
+    // Block first row winning move
     for (let pieceIndex = 0; pieceIndex <= 2; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === user.mark && gameBoard.getBoard()[pieceIndex + 6] === user.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === user.mark &&
+        gameBoard.getBoard()[pieceIndex + 6] === user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
+
+    // Block second row winning move
     for (let pieceIndex = 3; pieceIndex <= 5; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex + 3] === user.mark && gameBoard.getBoard()[pieceIndex - 3] === user.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex + 3] === user.mark &&
+        gameBoard.getBoard()[pieceIndex - 3] === user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
 
+
+    // Block third row winning move
     for (let pieceIndex = 6; pieceIndex <= 8; pieceIndex++) {
-      if (madeMove === false && gameBoard.getBoard()[pieceIndex] === '' && gameBoard.getBoard()[pieceIndex - 3] === user.mark && gameBoard.getBoard()[pieceIndex - 6] === user.mark) {
-        gameBoard.getBoard()[pieceIndex] = computer.mark;
+      if (
+        madeMove === false &&
+        gameBoard.getBoard()[pieceIndex] === '' &&
+        gameBoard.getBoard()[pieceIndex - 3] === user.mark &&
+        gameBoard.getBoard()[pieceIndex - 6] === user.mark
+      ) {
+        gameBoard.getBoard()[pieceIndex] = computer.mark; // Make move
         madeMove = true;
       }
     }
@@ -493,37 +898,74 @@ const gameController = (function () {
   
 
   function blockDiagonalMove() {
-   // Complete top left
-    if (madeMove === false && gameBoard.getBoard()[0] === '' && gameBoard.getBoard()[4] === user.mark && gameBoard.getBoard()[8] === user.mark) {
-      gameBoard.getBoard()[0] = computer.mark;
+    // Complete top left
+    if (
+      madeMove === false &&
+      gameBoard.getBoard()[0] === '' &&
+      gameBoard.getBoard()[4] === user.mark &&
+      gameBoard.getBoard()[8] === user.mark
+    ) {
+      gameBoard.getBoard()[0] = computer.mark;  // Make move
       madeMove = true;
     }
+    
     // Complete top right
-    else if (madeMove === false && gameBoard.getBoard()[2] === '' && gameBoard.getBoard()[4] === user.mark && gameBoard.getBoard()[6] === user.mark) {
-      gameBoard.getBoard()[2] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[2] === '' &&
+      gameBoard.getBoard()[4] === user.mark &&
+      gameBoard.getBoard()[6] === user.mark
+    ) {
+      gameBoard.getBoard()[2] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Complete center, left diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[0] === user.mark && gameBoard.getBoard()[8] === user.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+    // Complete center for left diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[0] === user.mark &&
+      gameBoard.getBoard()[8] === user.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
-    // Complete center, right diagonal
-    else if (madeMove === false && gameBoard.getBoard()[4] === '' && gameBoard.getBoard()[2] === user.mark && gameBoard.getBoard()[6] === user.mark) {
-      gameBoard.getBoard()[4] = computer.mark;
+
+    // Complete center for right diagonal
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[4] === '' &&
+      gameBoard.getBoard()[2] === user.mark &&
+      gameBoard.getBoard()[6] === user.mark
+    ) {
+      gameBoard.getBoard()[4] = computer.mark;  // Make move
       madeMove = true;
     }
+
     // Complete bottom left
-    else if (madeMove === false && gameBoard.getBoard()[6] === '' && gameBoard.getBoard()[4] === user.mark && gameBoard.getBoard()[2] === user.mark) {
-      gameBoard.getBoard()[6] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[6] === '' &&
+      gameBoard.getBoard()[4] === user.mark &&
+      gameBoard.getBoard()[2] === user.mark
+    ) {
+      gameBoard.getBoard()[6] = computer.mark;  // Make move
       madeMove = true;
     }
+
     // Complete bottom right
-    else if (madeMove === false && gameBoard.getBoard()[8] === '' && gameBoard.getBoard()[4] === user.mark && gameBoard.getBoard()[0] === user.mark) {
-      gameBoard.getBoard()[8] = computer.mark;
+    else if (
+      madeMove === false &&
+      gameBoard.getBoard()[8] === '' &&
+      gameBoard.getBoard()[4] === user.mark &&
+      gameBoard.getBoard()[0] === user.mark
+    ) {
+      gameBoard.getBoard()[8] = computer.mark;  // Make move
       madeMove = true;
     }
   }
+
+
 
   function blockWinningMove() {
     blockHorizontalMove();
@@ -531,26 +973,34 @@ const gameController = (function () {
     blockDiagonalMove();
   }
 
-  function makeRandomMove() {
-    // If previous functions did not find a move make a random move
-    while (madeMove === false) {
-      let randomIndex = Math.floor(Math.random() * 9);  // Generate random number 0 - 8 inclusive
 
+
+  function makeRandomMove() {
+    while (madeMove === false) {
+      // Generate random number 0 - 8 inclusive
+      let randomIndex = Math.floor(Math.random() * 9);
+
+      // Make move if piece is not populated
       if (gameBoard.getBoard()[randomIndex] === '') {
-        gameBoard.getBoard()[randomIndex] = computer.mark;
+        gameBoard.getBoard()[randomIndex] = computer.mark;  // Make move
         madeMove = true;
       }
     }
   }
 
+
+
   let firstMove = true;
   let madeMove = false;
+
 
 
   function resetController() {
     firstMove = true;
     madeMove = false;
   }
+
+
 
   function makeComputerMove() {
     madeMove = false;
@@ -567,10 +1017,13 @@ const gameController = (function () {
     checkForMove();
     makeRandomMove();
   }
-  
+
+
 
   return { makeComputerMove, checkForWin, checkForDraw, getUserStats, resetController };
 })();
+
+
 
 
 
@@ -866,16 +1319,3 @@ const displayController = (function () {
   updateStatDisplay();
   updateMarkDisplay();
 })();
-
-/*
-    <p id="user-mark-display">User: X</p>
-    <p id="computer-mark-display">Computer: O</p>
-*/
-
-/*
-  X X X
-  X X X
-  X X X
-*/
-
-console.log(gameBoard.getBoard())
